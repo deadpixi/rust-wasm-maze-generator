@@ -122,6 +122,7 @@ const solveMaze = (timestamp) => {
         solver = null;
         document.getElementById("generateButton").disabled = false;
         document.getElementById("exportButton").disabled = false;
+        document.getElementById("stringifyButton").disabled = false;
         document.getElementById("solveButton").disabled = false;
         document.getElementById("solveButton").innerHTML = "Solve";
         document.getElementById("solveButton").onclick = showSolution;
@@ -168,6 +169,7 @@ const solveMaze = (timestamp) => {
         solver = null;
         document.getElementById("generateButton").disabled = false;
         document.getElementById("exportButton").disabled = false;
+        document.getElementById("stringifyButton").disabled = false;
         document.getElementById("solveButton").disabled = false;
         document.getElementById("solveButton").innerHTML = "Solve";
         document.getElementById("solveButton").onclick = showSolution;
@@ -189,6 +191,7 @@ const generateMaze = (event) => {
     drawMaze();
     document.getElementById("solveButton").disabled = false;
     document.getElementById("exportButton").disabled = false;
+    document.getElementById("stringifyButton").disabled = false;
     solved = false;
     event.preventDefault();
 };
@@ -196,6 +199,7 @@ const generateMaze = (event) => {
 const showSolution = (event) => {    
     document.getElementById("generateButton").disabled = true;
     document.getElementById("exportButton").disabled = true;
+    document.getElementById("stringifyButton").disabled = true;
     
     document.getElementById("solveButton").innerHTML = "Finish";
     document.getElementById("solveButton").onclick = (event) => {shortCircuit = true; event.preventDefault();};
@@ -218,7 +222,17 @@ const exportMaze = (event) => {
     event.preventDefault();
 }
 
+// Export the maze as ASCII art.
+const stringifyMaze = (event) => {
+    let w = window.open('about:blank');
+    setTimeout(function(){
+        w.document.write("<pre>" + maze.as_string() + "</pre>");
+    }, 0);
+    event.preventDefault();
+}
+
 document.getElementById("generateButton").disabled=false;
 document.getElementById("generateButton").onclick = generateMaze;
 document.getElementById("solveButton").onclick = showSolution;
 document.getElementById("exportButton").onclick = exportMaze;
+document.getElementById("stringifyButton").onclick = stringifyMaze;

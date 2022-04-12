@@ -3,6 +3,7 @@ use rand::Rng;
 use std::cmp::{Eq, PartialEq};
 use std::collections::HashSet;
 use std::default::Default;
+use std::fmt;
 use std::ops::{Index, IndexMut};
 
 // FIXME - unify carving and solving, it's the same basic operation
@@ -88,6 +89,55 @@ pub struct Maze {
     cells: Vec<Cell>,
 }
 
+impl fmt::Display for Maze {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        for x in 0..self.width {
+            let cell = self[Position::new(x, 0)];
+            write!(
+                f,
+                "█{}",
+                if cell.has_opening(Direction::North) {
+                    " "
+                } else {
+                    "█"
+                }
+            )?;
+        }
+        writeln!(f, "█")?;
+        for y in 0..self.height {
+            for x in 0..self.width {
+                let cell = self[Position::new(x, y)];
+                write!(
+                    f,
+                    "{}",
+                    if cell.has_opening(Direction::West) {
+                        " "
+                    } else {
+                        "█"
+                    }
+                )?;
+                write!(f, " ")?;
+            }
+            writeln!(f, "█")?;
+            for x in 0..self.width {
+                let cell = self[Position::new(x, y)];
+                write!(
+                    f,
+                    "█{}",
+                    if cell.has_opening(Direction::South) {
+                        " "
+                    } else {
+                        "█"
+                    }
+                )?;
+            }
+            writeln!(f, "█")?;
+        }
+
+        Ok(())
+    }
+}
+
 impl Index<Position> for Maze {
     type Output = Cell;
 
@@ -152,6 +202,11 @@ impl Maze {
 
     pub fn finish(&self) -> Position {
         self.finish
+    }
+
+    // bindgen doesn't expose to_string directly
+    pub fn as_string(&self) -> String {
+        self.to_string()
     }
 }
 
