@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>A maze of rusty little passages, all alike...</title>
+    <style>
+        @media print {
+            .noprint {display:none;}
+        }
+        
+        .settings {
+            display:grid;
+            grid-template-columns: max-content max-content max-content;
+            grid-gap:5px;
+        }
+        .settings label       { text-align:right; }
+        .settings label:after { content: ":"; }
+    </style>
+</head>
+
+<body>
+<form class="noprint">
+  <fieldset class="settings">
+    <legend>Generate a Maze</legend>
+    
+    <label for="mazeHeight">Maze Height (cells)</label>
+    <input type="range" id="mazeHeight" name="mazeHeight" min="2" max="200" value="15" oninput="this.nextElementSibling.value = this.value">
+    <output>15</output>
+    
+    <label for="mazeWidth">Maze Width (cells)</label>
+    <input type="range" id="mazeWidth" name="mazeWidth" min="2" max="200" value="15" oninput="this.nextElementSibling.value = this.value">
+    <output>15</output>
+    
+    <label for="oppositeStart">Distant Start/Finish</label>
+    <input type="checkbox" id="oppositeStart" name="oppositeStart">
+    <output></output>
+    
+    <div>
+        <button id="generateButton" disabled>Generate</button>
+        <button id="solveButton" disabled>Solve</button>
+		<button id="exportButton" disabled>Export as Image</button>
+	</div>
+
+  </fieldset>
+</form>
+
+<div>
+	<canvas id="maze-canvas" style="image-rendering: pixelated; image-rendering: crisp-edges;"></canvas>
+</div>
+
+<script src="./bootstrap.js"></script>
+</body>
+</html>

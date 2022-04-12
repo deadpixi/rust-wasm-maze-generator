@@ -1,0 +1,22 @@
+[package]
+name = "rust-wasm-maze-generator"
+version = "0.1.0"
+edition = "2021"
+authors = ["rob king"]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+getrandom = { version = "*", features = ["js"] }
+rand = "*"
+wasm-bindgen = "*"
+
+[dev-dependencies]
+wasm-bindgen-test = "*"
+
+[profile.release]
+opt-level = "s"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
